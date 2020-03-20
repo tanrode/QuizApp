@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './quiz.dart';
 import 'result.dart';
+import './start.dart';
 
 void main() {
   runApp(course_app1());
@@ -17,6 +18,7 @@ class course_app1 extends StatefulWidget {
 class course_app1State extends State<course_app1> {
   var count = 0;
   var _totScore = 0;
+  var setStart=0;
   var ques = [
     {
       'Q': 'Who was the 1st President of India?',
@@ -60,17 +62,26 @@ class course_app1State extends State<course_app1> {
     setState(() {
       count=0;
       _totScore=0;
+      setStart=0;
     });    
+  }
+
+  void _continueGame()
+  {
+    setState(() {
+      setStart=1;
+    });
   }
   Widget build(BuildContext ctx) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(0, 225, 0, 0.75),
-          title: Text('My First App'),
+          title: Text('India General Knowledge Quiz'),
           centerTitle: true,
         ),
-        body: count < ques.length
+        body: setStart==0 ? Start(_continueGame): 
+            count < ques.length
             ? Quiz(changeState: _setQuestion,quizQues: ques,ct: count) 
              : Result(_totScore,_startGame),
       ),
